@@ -1,6 +1,5 @@
 package ru.javamentor.restapi.web.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,15 +18,6 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "rolename")
     private String roleName;
-
-    public Role(String roleName) {
-        if(roleName.contains("ADMIN")){
-            this.id= 1L;
-        }if(roleName.contains("USER")){
-            this.id= 2L;
-        }
-        this.roleName = roleName;
-    }
 
     @Override
     public String getAuthority() {

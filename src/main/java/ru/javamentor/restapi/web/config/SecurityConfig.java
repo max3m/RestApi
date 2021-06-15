@@ -54,9 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login").anonymous()
-                .antMatchers("/userpanel.js").access("hasAuthority('USER')")
-                .antMatchers("/api/principal").access("hasAuthority('USER')")
-                .antMatchers("/user").access("hasAuthority('USER')")
+                .antMatchers("/userpanel.js", "/api/principal", "/user").access("hasAuthority('USER')")
                 .antMatchers("/**").access("hasAuthority('ADMIN')")
                 .anyRequest().authenticated();
     }

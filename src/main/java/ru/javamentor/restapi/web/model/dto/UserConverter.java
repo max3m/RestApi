@@ -3,6 +3,7 @@ package ru.javamentor.restapi.web.model.dto;
 import org.springframework.stereotype.Component;
 import ru.javamentor.restapi.web.model.Role;
 import ru.javamentor.restapi.web.model.User;
+import ru.javamentor.restapi.web.repository.RoleRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserConverter {
+    private RoleRepository roleRepository;
+
+    public UserConverter(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
     public UserDTO convertUserToUserDTO(User user){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -18,10 +25,6 @@ public class UserConverter {
         userDTO.setAge(user.getAge());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
-        /*String [] roles = new String[user.getRoles().size()];
-        for(int i = 0; i < user.getRoles().size(); i++){
-            roles[i] = user.getRoles().get(i).toString();
-        }*/
         String[] roles = user.getRoles().stream()
                 .map(Role::getRoleName)
                 .collect(Collectors.toList())
@@ -44,10 +47,8 @@ public class UserConverter {
         user.setAge(userDTO.getAge());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-//        List<Role> roles = new ArrayList<>();
-//        for(String roleName : userDTO.getRoles()) { roles.add(new Role(roleName)); }
         List<Role> roles = Arrays.stream(userDTO.getRoles())
-                .map(role->new Role(role))
+                .map(role->roleRepository.findRoleByRoleName(role))
                 .collect(Collectors.toList());
         user.setRoles(roles);
         return user;

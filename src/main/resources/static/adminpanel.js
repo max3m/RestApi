@@ -196,37 +196,28 @@ function getDeleteModal(id) {
                         <form id="formDeleteUser" 
                               class="form-signin mx-auto font-weight-bold text-center"
                               style="width: 200px;">
-                            <p>
-                                <label for="del_id">ID</label>
+                            <p><label for="del_id">ID</label>
                                 <input class="form-control form-control-sm" type="text" name="id" id="del_id"
-                                       readOnly value="${user.id}">
-                            </p>
+                                readOnly value="${user.id}"></p>
                             <p><label for="name">Name</label>
-                                <input type="text" name="name" readonly value="${user.name}" id="name"></p>
+                                <input class="form-control form-control-sm" type="text" name="name" id="name"
+                                readonly value="${user.name}"></p>
                             <p><label for="lastname">Lastname</label>
-                                <input type="text" name="lastname" readOnly value="${user.lastname}" id="lastname"></p>
-                            <p><label for="Password">Password</label>
-                                <input type="password" name="password" readOnly value="${user.password}" id="Password"></p>
+                                <input class="form-control form-control-sm" type="text" name="lastname" id="lastname"
+                                readonly value="${user.lastname}"></p>
                             <p><label for="age">Age</label>
-                                <input type="number" name="age" readOnly value="${user.age}" id="age"></p>
+                                <input class="form-control form-control-sm" type="number" name="age" id="age" 
+                                readOnly value="${user.age}"></p>
                             <p><label for="email">Email</label>
-                                <input type="text" name="email" readOnly value="${user.email}" id="email"></p>
-                            <br>
-                            <p>
-                            <label>Role</label>
-                                <select id="editRoles" name="roles" multiple size="2" required
-                                               class="form-control form-control-sm">
-                                        <option value="${user.roles}">ADMIN</option>
-                                        <option value="${user.roles}">USER</option>
-                                </select>
-                            </p>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="button" 
-                                            class="btn btn-danger js-delete-user">Delete
-                                    </button>
-                                </div>
+                                <input class="form-control form-control-sm" type="text" name="email" id="email"
+                                readOnly value="${user.email}"></p>
+                            <p><label for="roles">Roles</label>
+                                <input class="form-control form-control-sm" type="text" name="roles" id="roles"
+                                readOnly value="${user.roles}"></p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger js-delete-user">Delete</button>
+                            </div>
                         </form>
                     </div>
                 </div>

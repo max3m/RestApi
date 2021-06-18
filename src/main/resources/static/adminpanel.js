@@ -78,9 +78,33 @@ function addUser() {
     ).done(function () {
         getAllUsers();
         $('.ustable').click()
+        $('#edit').modal('hide');
     })
 }
 
+function deleteUser() {
+    const form = document.getElementById('formDeleteUser');
+    const formData = new FormData(form);
+    const data = {};
+
+    for (let key of formData.keys()) {
+        data[key] = formData.get(key);
+    }
+    const id = data.id
+
+    $.ajax({
+            url: 'http://localhost:8080/api/users/' + id,
+            type: 'DELETE',
+            contentType: 'application/json',
+            processData: false,
+            cash: false,
+            data: JSON.stringify(data)
+        }
+    ).always(function () {
+        $(`tr[data-id=${data.id}]`).remove()
+        $('#edit').modal('hide');
+    })
+}
 function getEditModal(id) {
     $.ajax({
         url: 'http://localhost:8080/api/users/' + id,
@@ -122,20 +146,16 @@ function getEditModal(id) {
                                 <input type="text" name="email" value="${user.email}" id="email"></p>
                             <p>
                             <label>Role</label>
-                                <select id="roles" multiple size="2" required
-                                               class="form-control form-control-sm">
-                                        <option value="ADMIN">ADMIN</option>
-                                        <option value="USER">USER</option>
+                                <select id="roles" multiple size="2" required class="form-control form-control-sm">
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="USER">USER</option>
                                 </select>
                             </p>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="button" 
-                                            class="btn btn-primary js-edit-user">Edit
-                                    </button>
-                                </div>
-                                </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary js-edit-user">Edit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -228,28 +248,4 @@ function getDeleteModal(id) {
             deleteUser();
         })
     })
-
-    function deleteUser() {
-        const form = document.getElementById('formDeleteUser');
-        const formData = new FormData(form);
-        const data = {};
-
-        for (let key of formData.keys()) {
-            data[key] = formData.get(key);
-        }
-        const id = data.id
-
-        $.ajax({
-                url: 'http://localhost:8080/api/users/' + id,
-                type: 'DELETE',
-                contentType: 'application/json',
-                processData: false,
-                cash: false,
-                data: JSON.stringify(data)
-            }
-        ).always(function () {
-            $(`tr[data-id=${data.id}]`).remove()
-            $('#edit').modal('hide');
-        })
-    }
 }

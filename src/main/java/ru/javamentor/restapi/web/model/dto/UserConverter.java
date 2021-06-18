@@ -7,6 +7,8 @@ import ru.javamentor.restapi.web.repository.RoleRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,10 +35,11 @@ public class UserConverter {
         return userDTO;
     }
 
-    public List<UserDTO> convertAllToDTO(List<User> userList){
-        return userList.stream()
+    public Set<UserDTO> convertAllToDTO(List<User> userList){
+        List<UserDTO> usersList = userList.stream()
                 .map(this::convertUserToUserDTO)
                 .collect(Collectors.toList());
+        return new TreeSet<>(usersList);
     }
 
     public User convertUserDTOToUser(UserDTO userDTO){

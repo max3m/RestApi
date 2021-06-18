@@ -8,6 +8,7 @@ import ru.javamentor.restapi.web.model.dto.UserDTO;
 import ru.javamentor.restapi.web.repository.UserRepository;
 import ru.javamentor.restapi.web.model.User;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,16 +36,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public Set<UserDTO> getAllUsers() {
         return userConverter.convertAllToDTO(userRepository.findAll());
     }
 
     @Override
     public UserDTO getUserById(Long id) {
         User user = userRepository.getById(id);
-        if(user==null){
+        if(user == null){
             throw new UsernameNotFoundException(String.format("Пользователь с id = %s не найден", id));
         }
+        user.setPassword("");
         return userConverter.convertUserToUserDTO(user);
     }
 

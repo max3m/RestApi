@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.javamentor.restapi.web.model.dto.UserDTO;
 import ru.javamentor.restapi.web.service.UserService;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -20,14 +21,16 @@ public class RESTController {
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDTO> getAllUsers() {
+    public Set<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO userById(@PathVariable("id") Long id){
-        return userService.getUserById(id);
+        UserDTO userDTO = userService.getUserById(id);
+        userDTO.setPassword("");
+        return userDTO;
     }
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)

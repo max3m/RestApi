@@ -1,4 +1,4 @@
-package ru.javamentor.restapi.web.config;
+package ru.javamentor.restapi.web.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;

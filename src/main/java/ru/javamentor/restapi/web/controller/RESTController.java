@@ -21,15 +21,13 @@ public class RESTController {
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDTO> getAllUsers() {
-        List<UserDTO> users = userService.getAllUsers();
-        return users;
+        return userService.getAllUsers();
     }
 
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO userById(@PathVariable("id") Long id){
-        UserDTO userById = userService.getUserById(id);
-        return userById;
+        return userService.getUserById(id);
     }
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +51,7 @@ public class RESTController {
 
     @GetMapping("/principal")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO getPrincipal(){
+    public UserDTO getPrincipal() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userService.loadPrincipalDTO(userDetails.getUsername());
     }

@@ -1,5 +1,6 @@
-package ru.javamentor.restapi.web.config;
+package ru.javamentor.restapi.web.security;
 
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -44,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .permitAll();
+        //TODO add jwt
 
         http.logout()
                 .permitAll()

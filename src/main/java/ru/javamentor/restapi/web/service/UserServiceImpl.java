@@ -52,8 +52,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDTO userDTO) {
+        if (userDTO.getRoles().length == 0) {
+            userDTO.setRoles(new String[]{"USER"});
+        }
         User user = userConverter.convertUserDTOToUser(userDTO);
-        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        if(userDTO.getPassword() == "") {
+            user.setPassword(loadUserByUsername(userDTO.getEmail()).getPassword());
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        }
         userRepository.save(user);
     }
 

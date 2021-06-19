@@ -129,11 +129,9 @@ function getEditModal(id) {
                         <form id="formEditUser" 
                               class="form-signin mx-auto font-weight-bold text-center"
                               style="width: 200px;">
-                            <p>
-                                <label for="del_id">ID</label>
+                            <p><label for="del_id">ID</label>
                                 <input class="form-control form-control-sm" type="text" name="id" id="del_id"
-                                       readOnly value="${user.id}">
-                            </p>
+                                       readOnly value="${user.id}"></p>
                             <p><label for="name">Name</label>
                                 <input type="text" name="name" value="${user.name}" id="name"></p>
                             <p><label for="lastname">Lastname</label>
@@ -143,12 +141,12 @@ function getEditModal(id) {
                             <p><label for="age">Age</label>
                                 <input type="number" name="age" value="${user.age}" id="age"></p>
                             <p><label for="email">Email</label>
-                                <input type="text" name="email" value="${user.email}" id="email"></p>
-                            <p>
-                            <label>Role</label>
+                                <input class="form-control form-control-sm" type="text" name="email" id="email"
+                                readOnly value="${user.email}"></p>
+                            <label>Roles</label>
                                 <select id="roles" multiple size="2" required class="form-control form-control-sm">
                                     <option value="ADMIN">ADMIN</option>
-                                    <option value="USER">USER</option>
+                                    <option value="USER" selected>USER</option>
                                 </select>
                             </p>
                             <div class="modal-footer">

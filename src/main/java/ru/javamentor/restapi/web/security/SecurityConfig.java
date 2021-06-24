@@ -7,9 +7,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.javamentor.restapi.web.jwt.JwtTokenVerifier;
+import ru.javamentor.restapi.web.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -38,25 +41,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+        /*http.formLogin()
                 .loginPage("/login")
                 .successHandler(loginSuccessHandler)
                 .loginProcessingUrl("/login")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
-                .permitAll();
-        //TODO add jwt
+                .permitAll();*/
 
+/*
         http.logout()
                 .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .and().csrf().disable();
+*/
 
-        http
+        /*http
                 .authorizeRequests()
                 .antMatchers("/login").anonymous()
                 .antMatchers("/userpanel.js", "/api/principal", "/user").access("hasAuthority('USER')")
+                .antMatchers("/**").access("hasAuthority('ADMIN')")
+                .anyRequest().authenticated();*/
+        http
+                .csrf().disable()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
+                .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)
+                .authorizeRequests()
+                /*.antMatchers("/login").anonymous()
+                .antMatchers("/userpanel.js", "/api/principal", "/user").access("hasAuthority('USER')")*/
+                .antMatchers("/").permitAll()
                 .antMatchers("/**").access("hasAuthority('ADMIN')")
                 .anyRequest().authenticated();
     }
